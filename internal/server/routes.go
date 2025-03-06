@@ -6,40 +6,37 @@ import (
 	"log"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-
+	"DBackend/internal/database"
+	"DBackend/internal/server/routes"
 	"github.com/gofiber/contrib/websocket"
+	"github.com/gofiber/fiber/v2"
 )
 
 func (s *FiberServer) RegisterFiberRoutes() {
 	// Apply CORS middleware
-	s.App.Use(cors.New(cors.Config{
-		AllowOrigins:     "*",
-		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS,PATCH",
-		AllowHeaders:     "Accept,Authorization,Content-Type",
-		AllowCredentials: false, // credentials require explicit origins
-		MaxAge:           300,
-	}))
+	api := s.Group("/api/v1")
 
-	s.App.Get("/", s.HelloWorldHandler)
+	api.Get("/health", s.healthHandler)
 
-	s.App.Get("/health", s.healthHandler)
-
-	s.App.Get("/websocket", websocket.New(s.websocketHandler))
-
-}
-
-func (s *FiberServer) HelloWorldHandler(c *fiber.Ctx) error {
-	resp := fiber.Map{
-		"message": "Hello World",
-	}
-
-	return c.JSON(resp)
+	api.Get("/websocket", websocket.New(s.websocketHandler))
 }
 
 func (s *FiberServer) healthHandler(c *fiber.Ctx) error {
 	return c.JSON(s.db.Health())
+}
+
+func SetupRoutes(app *fiber.App, db database.Service, prefix string) {
+	api := app.Group("/" + prefix)
+	routes.UserRoutes(api, db)
+	routes.AuthRoutes(api, db)
+  routes.ProtectedRoutes(api, db)
+	NotFoundRoute(app)
+}
+
+func NotFoundRoute(app *fiber.App) {
+	app.Use(func(c *fiber.Ctx) error {
+		return c.Status(404).JSON(fiber.Map{"error": "Route not found"})
+	})
 }
 
 func (s *FiberServer) websocketHandler(con *websocket.Conn) {

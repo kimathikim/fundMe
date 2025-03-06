@@ -1,7 +1,6 @@
 package main
 
 import (
-	"DBackend/internal/server"
 	"context"
 	"fmt"
 	"log"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"syscall"
 	"time"
+
+	"DBackend/internal/server"
 
 	_ "github.com/joho/godotenv/autoload"
 )
@@ -39,7 +40,6 @@ func gracefulShutdown(fiberServer *server.FiberServer, done chan bool) {
 }
 
 func main() {
-
 	server := server.New()
 
 	server.RegisterFiberRoutes()

@@ -14,27 +14,28 @@ import (
 
 type Service interface {
 	Health() map[string]string
+	User() UserService
 }
 
 type service struct {
-	db *mongo.Client
+	db   *mongo.Client
+	user UserService
 }
 
 var (
 	host = os.Getenv("BLUEPRINT_DB_HOST")
 	port = os.Getenv("BLUEPRINT_DB_PORT")
-	//database = os.Getenv("BLUEPRINT_DB_DATABASE")
+	// database = os.Getenv("BLUEPRINT_DB_DATABASE")
 )
 
 func New() Service {
 	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s", host, port)))
-
 	if err != nil {
 		log.Fatal(err)
-
 	}
 	return &service{
-		db: client,
+		db:   client,
+		user: NewUserService(client),
 	}
 }
 
@@ -50,4 +51,8 @@ func (s *service) Health() map[string]string {
 	return map[string]string{
 		"message": "It's healthy",
 	}
+}
+
+func (s *service) User() UserService {
+	return s.user
 }
