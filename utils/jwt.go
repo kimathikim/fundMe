@@ -1,8 +1,10 @@
 package utils
 
 import (
+	"strings"
 	"time"
-  "strings"
+  "fmt"
+//  "encoding/base64"
 
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -43,7 +45,6 @@ func ExtractBearerToken(authHeader string) string {
 	}
 	return ""
 }
-
 // ValidateJWT verifies and extracts claims from a JWT token
 func ValidateJWT(tokenString string) (*Claims, error) {
 	claims := &Claims{}
@@ -55,7 +56,7 @@ func ValidateJWT(tokenString string) (*Claims, error) {
 
 	// Return error if token is invalid
 	if err != nil || !token.Valid {
-		return nil, err
+		return nil, fmt.Errorf("invalid token: %v", err)
 	}
 
 	return claims, nil

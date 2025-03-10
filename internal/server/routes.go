@@ -15,9 +15,7 @@ import (
 func (s *FiberServer) RegisterFiberRoutes() {
 	// Apply CORS middleware
 	api := s.Group("/api/v1")
-
 	api.Get("/health", s.healthHandler)
-
 	api.Get("/websocket", websocket.New(s.websocketHandler))
 }
 
@@ -30,7 +28,7 @@ func SetupRoutes(app *fiber.App, db database.Service, prefix string) {
 	routes.UserRoutes(api, db)
 	routes.AuthRoutes(api, db)
   routes.ProtectedRoutes(api, db)
-	NotFoundRoute(app)
+//	NotFoundRoute(app)
 }
 
 func NotFoundRoute(app *fiber.App) {

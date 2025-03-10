@@ -1,10 +1,12 @@
 package middleware
 
 import (
+	"fmt"
 	"strings"
 
 	"DBackend/internal/database"
 	"DBackend/utils"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -37,12 +39,12 @@ func JWTMiddleware(db database.Service) fiber.Handler {
 		// Validate token
 		claims, err := utils.ValidateJWT(token)
 		if err != nil {
+      fmt.Println(err)
 			return c.Status(401).JSON(fiber.Map{"error": "Invalid token"})
 		}
-
 		// Store user details in context
-		c.Locals("user_email", claims.Email)
-		c.Locals("user_roles", claims.Roles)
+		c.Locals("email", claims.Email)
+		c.Locals("roles", claims.Roles)
 
 		return c.Next()
 	}

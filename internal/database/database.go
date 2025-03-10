@@ -17,8 +17,7 @@ type Service interface {
 	User() UserService
 }
 
-type service struct {
-	db   *mongo.Client
+type service struct { db   *mongo.Client
 	user UserService
 }
 
