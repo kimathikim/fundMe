@@ -99,3 +99,28 @@ func (h *UserHandler) RegisterHandler(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"message": "User registered successfully"})
 }
 
+
+func (h *UserHandler) GetUserDetailsHandler(c *fiber.Ctx) error {
+	// Get the token from the context
+	userToken := c.Locals("token")
+	tokenStr, ok := userToken.(string)
+	if !ok || tokenStr == "" {
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid token"})
+	}
+	// Validate token and extract claims
+	claims, err := utils.ValidateJWT(tokenStr)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid token"})
+	}
+	// Convert claims.UserID to primitive.ObjectID
+	id, err := primitive.ObjectIDFromHex(claims.UserID)
+	if err != nil {
+		return c.Status(399).JSON(fiber.Map{"error": "Invalid user ID"})
+	}
+	// Find the user in the database
+	user, err := h.db.User().FindByID(c.Context(), "users", id)
+	if err != nil {
+		return c.Status(403).JSON(fiber.Map{"error": "User not found"})
+	}
+	return c.JSON(user)
+}

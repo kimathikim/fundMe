@@ -34,4 +34,3 @@ func New() *FiberServer {
 
 	return server
 }
-

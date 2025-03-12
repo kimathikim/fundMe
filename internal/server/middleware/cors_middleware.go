@@ -8,10 +8,11 @@ import (
 // CORSMiddleware configures CORS for the application
 func CORSMiddleware() fiber.Handler {
 	return cors.New(cors.Config{
-		AllowOrigins:     "*", // Change this to specific frontend domains in production
+    AllowOrigins:     "http://localhost:3000", // Change this to specific frontend domains in production
 		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS,PATCH",
 		AllowHeaders:     "Accept, Authorization, Content-Type",
-		AllowCredentials: false,
-		MaxAge:           3600, // Cache the preflight response for 1 hour
+		AllowCredentials: true, // Enables cookies (for authentication)
+		MaxAge:           3200, // Cache the preflight response for 1 hour
 	})
 }
+

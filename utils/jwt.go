@@ -1,10 +1,11 @@
 package utils
 
 import (
+	"fmt"
 	"strings"
 	"time"
-  "fmt"
-//  "encoding/base64"
+
+	//  "encoding/base64"
 
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -14,20 +15,20 @@ var jwtSecret = []byte("your-secure-secret-key")
 
 // Claims struct for JWT payload
 type Claims struct {
-	Email string   `json:"email"`
-	Roles []string `json:"roles"`
+	UserID string   `json:"user_id"`
+	Roles  []string `json:"roles"`
 	jwt.RegisteredClaims
 }
 
 // GenerateJWT creates a signed JWT token for a user
-func GenerateJWT(email string, roles []string) (string, error) {
+func GenerateJWT(user_id string, roles []string) (string, error) {
 	// Set token expiration time (e.g., 15 minutes)
-	expirationTime := time.Now().Add(15 * time.Minute)
+	expirationTime := time.Now().Add(60 * time.Minute)
 
 	// Define claims (payload)
 	claims := &Claims{
-		Email: email,
-		Roles: roles,
+		UserID: user_id,
+		Roles:  roles,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime), // Expiry
 		},
@@ -45,6 +46,7 @@ func ExtractBearerToken(authHeader string) string {
 	}
 	return ""
 }
+
 // ValidateJWT verifies and extracts claims from a JWT token
 func ValidateJWT(tokenString string) (*Claims, error) {
 	claims := &Claims{}

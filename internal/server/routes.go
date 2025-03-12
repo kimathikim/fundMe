@@ -7,14 +7,15 @@ import (
 	"time"
 
 	"DBackend/internal/database"
+	"DBackend/internal/server/middleware"
 	"DBackend/internal/server/routes"
+
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (s *FiberServer) RegisterFiberRoutes() {
-	// Apply CORS middleware
-	api := s.Group("/api/v1")
+	api := s.Group("/api/v1", middleware.CORSMiddleware())
 	api.Get("/health", s.healthHandler)
 	api.Get("/websocket", websocket.New(s.websocketHandler))
 }
@@ -27,8 +28,9 @@ func SetupRoutes(app *fiber.App, db database.Service, prefix string) {
 	api := app.Group("/" + prefix)
 	routes.UserRoutes(api, db)
 	routes.AuthRoutes(api, db)
-  routes.ProtectedRoutes(api, db)
-//	NotFoundRoute(app)
+	routes.FounderRoutes(api, db)
+	routes.InvestorRoutes(api, db)
+	NotFoundRoute(app)
 }
 
 func NotFoundRoute(app *fiber.App) {

@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"DBackend/model"
@@ -15,8 +16,12 @@ import (
 // UserService interface
 type UserService interface {
 	FindByEmail(ctx context.Context, email string) (*model.User, error)
+	// find by id of any model
+	FindByID(ctx context.Context, collectionName string, id primitive.ObjectID) (interface{}, error)
 	UpdateRoles(ctx context.Context, email string, roles []string) (*mongo.UpdateResult, error)
 	CreateUser(ctx context.Context, user model.User) (*mongo.InsertOneResult, error)
+	UpdateFounder(ctx context.Context, userID primitive.ObjectID, founder model.Founder) (*mongo.UpdateResult, error)
+  UpdateInvestor(ctx context.Context, userID primitive.ObjectID, investor model.Investor) (*mongo.UpdateResult, error)
 	CreateRoleData(ctx context.Context, userID primitive.ObjectID, role string) error
 	BlacklistToken(ctx context.Context, token string) error
 	IsTokenBlacklisted(ctx context.Context, token string) (bool, error)
@@ -75,6 +80,42 @@ func (s *userService) FindByEmail(ctx context.Context, email string) (*model.Use
 	return &user, nil
 }
 
+// FindByID retrieves an object from a specified collection based on the provided ID
+func (s *userService) FindByID(ctx context.Context, collectionName string, id primitive.ObjectID) (interface{}, error) {
+	var collection *mongo.Collection
+	var result interface{}
+	fmt.Println("/n", id)
+	// Map the collectionName to the correct collection and model
+	switch collectionName {
+	case "users":
+		collection = s.userCollection
+		result = &model.User{}
+		fmt.Println("/n", result)
+	case "founders":
+		collection = s.founderCollection
+		result = &model.Founder{}
+	case "investors":
+		collection = s.investorCollection
+		result = &model.Investor{}
+	case "admins":
+		collection = s.adminCollection
+		result = &model.Admin{}
+	default:
+		return nil, errors.New("invalid collection name")
+	}
+
+	// Query the specified collection
+	err := collection.FindOne(ctx, bson.M{"user_id": id}).Decode(result)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, errors.New("object not found")
+		}
+		return nil, err
+	}
+
+	return result, nil
+}
+
 // Update user roles
 func (s *userService) UpdateRoles(ctx context.Context, email string, roles []string) (*mongo.UpdateResult, error) {
 	filter := bson.M{"email": email}
@@ -102,4 +143,47 @@ func (s *userService) CreateRoleData(ctx context.Context, userID primitive.Objec
 	default:
 		return errors.New("invalid role")
 	}
+}
+
+// Update founder data
+func (s *userService) UpdateFounder(ctx context.Context, userID primitive.ObjectID, founder model.Founder) (*mongo.UpdateResult, error) {
+	filter := bson.M{"user_id": userID}
+	updateFields := bson.M{
+		"startup_name":       founder.StartupName,
+		"mission_statement":  founder.MissionStatement,
+		"industry":           founder.Industry,
+		"funding_stage":      founder.FundingStage,
+		"funding_allocation": founder.FundingAllocation,
+		"bussiness_model":    founder.BusinessModel,
+		"revenue_streams":    founder.RevenueStreams,
+		"traction":           founder.Traction,
+		"scaling_potential":  founder.ScalingPotential,
+		"competition":        founder.Competition,
+		"leadership_team":    founder.LeadershipTeam,
+		"team_size":          founder.TeamSize,
+		"location":           founder.Location,
+		"startup_website":    founder.StartupWebsite,
+		"pitch_deck":         founder.PitchDeck,
+	}
+	update := bson.M{"$set": updateFields}
+	return s.founderCollection.UpdateOne(ctx, filter, update)
+}
+
+func (s *userService) UpdateInvestor(ctx context.Context, userID primitive.ObjectID, investor model.Investor) (*mongo.UpdateResult, error) {
+	filter := bson.M{"user_id": userID}
+	updateFields := bson.M{
+		"investment_portfolio":    investor.InvestmentPortfolio,
+		"total_invested":          investor.TotalInvested,
+		"investor_type":           investor.InvestorType,
+		"thesis":                  investor.Thesis,
+		"preferred_funding_stage": investor.PreferredFundingStage,
+		"investment_range":        investor.InvestmentRange,
+		"investment_frequency":    investor.InvestmentFrequency,
+		"risk_tolerance":          investor.RiskTolerance,
+		"exit_strategy":           investor.ExitStrategy,
+		"preferred_industries":    investor.PreferredIndustries,
+		"preferred_regions":       investor.PreferredRegions,
+	}
+	update := bson.M{"$set": updateFields}
+	return s.investorCollection.UpdateOne(ctx, filter, update)
 }

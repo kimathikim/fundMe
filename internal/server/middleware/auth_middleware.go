@@ -21,47 +21,44 @@ func JWTMiddleware(db database.Service) fiber.Handler {
 				token = utils.ExtractBearerToken(authHeader)
 			}
 		}
-
 		if token == "" {
 			return c.Status(401).JSON(fiber.Map{"error": "Unauthorized"})
 		}
-
 		// Check if token is blacklisted
 		isBlacklisted, err := db.User().IsTokenBlacklisted(c.Context(), token)
 		if err != nil {
 			return c.Status(500).JSON(fiber.Map{"error": "Database error"})
 		}
-
 		if isBlacklisted {
 			return c.Status(401).JSON(fiber.Map{"error": "Token expired, please log in again"})
 		}
-
 		// Validate token
 		claims, err := utils.ValidateJWT(token)
 		if err != nil {
-      fmt.Println(err)
-			return c.Status(401).JSON(fiber.Map{"error": "Invalid token"})
+			fmt.Println(err)
+			return c.Status(401).JSON(fiber.Map{"error": err})
 		}
+
 		// Store user details in context
-		c.Locals("email", claims.Email)
+		c.Locals("user_id", claims.UserID)
 		c.Locals("roles", claims.Roles)
+		c.Locals("token", token)
 
 		return c.Next()
 	}
 }
 
-
 func RequireRole(role string) fiber.Handler {
-  return func(c *fiber.Ctx) error {
-    roles, ok := c.Locals("user_roles").([]string)
-    if !ok {
-      return c.Status(403).JSON(fiber.Map{"error": "Forbidden"})
-    }
-    for _, r := range roles {
-      if r == role {
-        return c.Next()
-      }
-    }
-    return c.Status(403).JSON(fiber.Map{"error": "access denied"})
-  }
+	return func(c *fiber.Ctx) error {
+		roles, ok := c.Locals("roles").([]string)
+		if !ok {
+			return c.Status(403).JSON(fiber.Map{"error": "Forbidden"})
+		}
+		for _, r := range roles {
+			if r == role {
+				return c.Next()
+			}
+		}
+		return c.Status(403).JSON(fiber.Map{"error": "access denied"})
+	}
 }
