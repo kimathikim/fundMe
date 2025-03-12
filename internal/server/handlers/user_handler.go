@@ -115,12 +115,18 @@ func (h *UserHandler) GetUserDetailsHandler(c *fiber.Ctx) error {
 	// Convert claims.UserID to primitive.ObjectID
 	id, err := primitive.ObjectIDFromHex(claims.UserID)
 	if err != nil {
-		return c.Status(399).JSON(fiber.Map{"error": "Invalid user ID"})
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid user ID"})
 	}
 	// Find the user in the database
 	user, err := h.db.User().FindByID(c.Context(), "users", id)
 	if err != nil {
-		return c.Status(403).JSON(fiber.Map{"error": "User not found"})
+		return c.Status(404).JSON(fiber.Map{"error": "User not found"})
 	}
-	return c.JSON(user)
+	// Type assert user to model.User and remove sensitive fields
+	userDetails, ok := user.(*model.User)
+	if !ok {
+		return c.Status(500).JSON(fiber.Map{"error": "Internal server error"})
+	}
+	userDetails.Password = ""
+	return c.JSON(userDetails)
 }
