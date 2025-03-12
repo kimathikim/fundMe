@@ -3,7 +3,6 @@ package database
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"DBackend/model"
@@ -21,7 +20,7 @@ type UserService interface {
 	UpdateRoles(ctx context.Context, email string, roles []string) (*mongo.UpdateResult, error)
 	CreateUser(ctx context.Context, user model.User) (*mongo.InsertOneResult, error)
 	UpdateFounder(ctx context.Context, userID primitive.ObjectID, founder model.Founder) (*mongo.UpdateResult, error)
-  UpdateInvestor(ctx context.Context, userID primitive.ObjectID, investor model.Investor) (*mongo.UpdateResult, error)
+	UpdateInvestor(ctx context.Context, userID primitive.ObjectID, investor model.Investor) (*mongo.UpdateResult, error)
 	CreateRoleData(ctx context.Context, userID primitive.ObjectID, role string) error
 	BlacklistToken(ctx context.Context, token string) error
 	IsTokenBlacklisted(ctx context.Context, token string) (bool, error)
@@ -84,13 +83,12 @@ func (s *userService) FindByEmail(ctx context.Context, email string) (*model.Use
 func (s *userService) FindByID(ctx context.Context, collectionName string, id primitive.ObjectID) (interface{}, error) {
 	var collection *mongo.Collection
 	var result interface{}
-	fmt.Println("/n", id)
+
 	// Map the collectionName to the correct collection and model
 	switch collectionName {
 	case "users":
 		collection = s.userCollection
 		result = &model.User{}
-		fmt.Println("/n", result)
 	case "founders":
 		collection = s.founderCollection
 		result = &model.Founder{}
@@ -105,7 +103,12 @@ func (s *userService) FindByID(ctx context.Context, collectionName string, id pr
 	}
 
 	// Query the specified collection
-	err := collection.FindOne(ctx, bson.M{"user_id": id}).Decode(result)
+	filter := bson.M{"_id": id}
+	if collectionName != "users" {
+		filter = bson.M{"user_id": id}
+	}
+
+	err := collection.FindOne(ctx, filter).Decode(result)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, errors.New("object not found")
