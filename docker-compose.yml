@@ -1,9 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: prod
+    image: registry.digitalocean.com/fundme/fundme-app:latest
     restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
@@ -35,6 +32,17 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
+    networks:
+      - blueprint
+  matchmaking:
+    image: registry.digitalocean.com/fundme/matchmaking-service:latest
+    restart: unless-stopped
+    ports:
+      - "4040:4040"
+    environment:
+      - TF_CPP_MIN_LOG_LEVEL=2  # Suppress TensorFlow logging
+    depends_on:
+      - app
     networks:
       - blueprint
 

@@ -11,4 +11,5 @@ func UserRoutes(api fiber.Router, db database.Service) {
 	apiV1 := api.Group("/user")
 	userHandler := handlers.NewUserHandler(db)
 	apiV1.Post("/register", userHandler.RegisterHandler)
+	apiV1.Get("/count", userHandler.GetUserCountHandler)
 }

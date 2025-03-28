@@ -8,7 +8,7 @@ import (
 // CORSMiddleware configures CORS for the application
 func CORSMiddleware() fiber.Handler {
 	return cors.New(cors.Config{
-    AllowOrigins:     "http://localhost:3000", // Change this to specific frontend domains in production
+		AllowOrigins:     "http://localhost:3000", // Change this to specific frontend domains in production
 		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS,PATCH",
 		AllowHeaders:     "Accept, Authorization, Content-Type",
 		AllowCredentials: true, // Enables cookies (for authentication)

@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"fmt"
+	"log"
 	"strings"
 
 	"DBackend/internal/database"
@@ -35,8 +35,8 @@ func JWTMiddleware(db database.Service) fiber.Handler {
 		// Validate token
 		claims, err := utils.ValidateJWT(token)
 		if err != nil {
-			fmt.Println(err)
-			return c.Status(401).JSON(fiber.Map{"error": err})
+			log.Printf("JWT validation error: %v", err)
+			return c.Status(401).JSON(fiber.Map{"error": "Invalid or expired token"})
 		}
 
 		// Store user details in context

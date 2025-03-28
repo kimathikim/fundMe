@@ -1,0 +1,171 @@
+{
+  "matches": [
+    {
+      "founder_id": "67d1f5269fa55d9593a05647",
+      "investor_id": "67d33a18608aa0d7c68990fa",
+      "fund_required": 750000,
+      "total_invested": 600.0,
+      "industry": "Education",
+      "funding_stage": "Series C+",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 34
+    },
+    {
+      "founder_id": "67d20d1a4a2e2b93a8a2af6a",
+      "investor_id": "67d33a18608aa0d7c68990fa",
+      "fund_required": 0,
+      "total_invested": 600.0,
+      "industry": "",
+      "funding_stage": "",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 65
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05648",
+      "investor_id": "67d33a18608aa0d7c68990fb",
+      "fund_required": 750000,
+      "total_invested": 1500000.0,
+      "industry": "Healthcare",
+      "funding_stage": "Series A",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "Moderate",
+      "match_percentage": 80
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05649",
+      "investor_id": "67d33a18608aa0d7c68990fc",
+      "fund_required": 500000,
+      "total_invested": 2000000.0,
+      "industry": "Fintech",
+      "funding_stage": "Seed",
+      "preferred_funding_stage": "Seed",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 75
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05650",
+      "investor_id": "67d33a18608aa0d7c68990fd",
+      "fund_required": 300000,
+      "total_invested": 500000.0,
+      "industry": "Technology",
+      "funding_stage": "Series B",
+      "preferred_funding_stage": "Series B",
+      "risk_tolerance": "Low Risk",
+      "match_percentage": 60
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05651",
+      "investor_id": "67d33a18608aa0d7c68990fe",
+      "fund_required": 1200000,
+      "total_invested": 3000000.0,
+      "industry": "Blockchain",
+      "funding_stage": "Series C+",
+      "preferred_funding_stage": "Series C+",
+      "risk_tolerance": "Moderate",
+      "match_percentage": 85
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05652",
+      "investor_id": "67d33a18608aa0d7c68990ff",
+      "fund_required": 450000,
+      "total_invested": 750000.0,
+      "industry": "E-commerce",
+      "funding_stage": "Seed",
+      "preferred_funding_stage": "Seed",
+      "risk_tolerance": "Low Risk",
+      "match_percentage": 70
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05653",
+      "investor_id": "67d33a18608aa0d7c6899100",
+      "fund_required": 600000,
+      "total_invested": 900000.0,
+      "industry": "AI/ML",
+      "funding_stage": "Series A",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 90
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05654",
+      "investor_id": "67d33a18608aa0d7c6899101",
+      "fund_required": 800000,
+      "total_invested": 2000000.0,
+      "industry": "Healthcare",
+      "funding_stage": "Series B",
+      "preferred_funding_stage": "Series B",
+      "risk_tolerance": "Moderate",
+      "match_percentage": 78
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05655",
+      "investor_id": "67d33a18608aa0d7c6899102",
+      "fund_required": 550000,
+      "total_invested": 850000.0,
+      "industry": "Fintech",
+      "funding_stage": "Seed",
+      "preferred_funding_stage": "Seed",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 72
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05656",
+      "investor_id": "67d33a18608aa0d7c6899103",
+      "fund_required": 700000,
+      "total_invested": 1250000.0,
+      "industry": "Technology",
+      "funding_stage": "Series B",
+      "preferred_funding_stage": "Series B",
+      "risk_tolerance": "Low Risk",
+      "match_percentage": 65
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05657",
+      "investor_id": "67d33a18608aa0d7c6899104",
+      "fund_required": 400000,
+      "total_invested": 950000.0,
+      "industry": "E-commerce",
+      "funding_stage": "Series A",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "Moderate",
+      "match_percentage": 82
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05658",
+      "investor_id": "67d33a18608aa0d7c6899105",
+      "fund_required": 900000,
+      "total_invested": 3000000.0,
+      "industry": "Blockchain",
+      "funding_stage": "Series C+",
+      "preferred_funding_stage": "Series C+",
+      "risk_tolerance": "High Risk",
+      "match_percentage": 88
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05659",
+      "investor_id": "67d33a18608aa0d7c6899106",
+      "fund_required": 350000,
+      "total_invested": 400000.0,
+      "industry": "Education",
+      "funding_stage": "Seed",
+      "preferred_funding_stage": "Seed",
+      "risk_tolerance": "Low Risk",
+      "match_percentage": 55
+    },
+    {
+      "founder_id": "67d1f5269fa55d9593a05660",
+      "investor_id": "67d33a18608aa0d7c6899107",
+      "fund_required": 1000000,
+      "total_invested": 5000000.0,
+      "industry": "AI/ML",
+      "funding_stage": "Series A",
+      "preferred_funding_stage": "Series A",
+      "risk_tolerance": "Moderate",
+      "match_percentage": 92
+    }
+  ]
+}
+
+

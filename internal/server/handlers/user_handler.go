@@ -128,5 +128,17 @@ func (h *UserHandler) GetUserDetailsHandler(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": "Internal server error"})
 	}
 	userDetails.Password = ""
+	userDetails.ID = primitive.NilObjectID
+
 	return c.JSON(userDetails)
+}
+
+// GetUserCountHandler returns the total count of users
+func (h *UserHandler) GetUserCountHandler(c *fiber.Ctx) error {
+	count, err := h.db.User().GetUserCount(c.Context())
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"error": "Failed to get user count"})
+	}
+	
+	return c.JSON(fiber.Map{"count": count})
 }

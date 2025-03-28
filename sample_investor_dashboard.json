@@ -1,0 +1,60 @@
+{
+  "portfolioSummary": {
+    "totalInvested": 3500000,
+    "activeInvestments": 8,
+    "averageReturn": 22.5,
+    "portfolioValue": 4200000,
+    "industryBreakdown": [
+      {
+        "industry": "Healthcare",
+        "percentage": 35
+      },
+      {
+        "industry": "AI/ML",
+        "percentage": 25
+      },
+      {
+        "industry": "Fintech",
+        "percentage": 20
+      },
+      {
+        "industry": "Other",
+        "percentage": 20
+      }
+    ]
+  },
+  "dealFlow": {
+    "totalDeals": 24,
+    "newThisMonth": 7,
+    "inDueDiligence": 3,
+    "topMatches": [
+      {
+        "founderId": "67d1f5269fa55d9593a05648",
+        "startupName": "InnovaTech",
+        "matchPercentage": 92,
+        "industry": "Healthcare",
+        "fundingStage": "Series A",
+        "fundRequired": 750000
+      },
+      {
+        "founderId": "67d1f5269fa55d9593a05653",
+        "startupName": "AI Solutions",
+        "matchPercentage": 88,
+        "industry": "AI/ML",
+        "fundingStage": "Series A",
+        "fundRequired": 600000
+      }
+    ]
+  },
+  "performanceMetrics": {
+    "monthlyReturns": [
+      {"month": "Jan", "return": 2.1},
+      {"month": "Feb", "return": 1.8},
+      {"month": "Mar", "return": 3.2},
+      {"month": "Apr", "return": -0.5},
+      {"month": "May", "return": 2.7},
+      {"month": "Jun", "return": 3.1}
+    ],
+    "benchmarkComparison": 8.5
+  }
+}

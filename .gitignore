@@ -24,6 +24,10 @@ tmp/
 
 # .env file
 .env
+.env.*
+.env.production
+.env.development
+.env.local
 
 # Project build
 main
@@ -31,4 +35,77 @@ main
 
 # OS X generated file
 .DS_Store
+
+# Shell scripts (potentially containing sensitive information)
+*.sh
+deploy.sh
+deploy-all.sh
+redeploy-app.sh
+mongo_access.sh
+apply_nginx_config.sh
+fix-502-error.sh
+fix-static-files.sh
+expose-container.sh
+docker-troubleshoot.sh
+find-hardcoded-urls.sh
+clear-cache.sh
+
+# Configuration files with sensitive information
+credentials.json
+*credentials*.json
+*secrets*.json
+*auth*.json
+*token*.json
+*key*.json
+*password*.json
+*apikey*.json
+nginx-config.conf
+.air.toml
+
+# Docker related
+docker-compose.yml
+Dockerfile
+**/Dockerfile
+
+# Certificate files
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# Log files
+*.log
+logs/
+build-errors.log
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Database files
+*.sql
+*.sqlite
+*.db
+
+# Temporary files
+tmp/
+temp/
+
+# Goreleaser
+.goreleaser.yml
+dist/
+
+# MongoDB data
+mongo_volume_bp/
+
+# MatchMaking service specific
+MatchMakingService/venv/
+MatchMakingService/*.pid
+MatchMakingService/*.log
+MatchMakingService/matchmaking_model.keras
+MatchMakingService/founder_preprocessor.pkl
+MatchMakingService/investor_preprocessor.pkl
 

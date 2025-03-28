@@ -23,7 +23,7 @@ type Claims struct {
 // GenerateJWT creates a signed JWT token for a user
 func GenerateJWT(user_id string, roles []string) (string, error) {
 	// Set token expiration time (e.g., 15 minutes)
-	expirationTime := time.Now().Add(60 * time.Minute)
+	expirationTime := time.Now().Add(60 * time.Hour)
 
 	// Define claims (payload)
 	claims := &Claims{

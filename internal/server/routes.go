@@ -18,6 +18,19 @@ func (s *FiberServer) RegisterFiberRoutes() {
 	api := s.Group("/api/v1", middleware.CORSMiddleware())
 	api.Get("/health", s.healthHandler)
 	api.Get("/websocket", websocket.New(s.websocketHandler))
+	
+	// Register all other routes
+	routes.UserRoutes(api, s.db)
+	routes.AuthRoutes(api, s.db)
+	routes.FounderRoutes(api, s.db)
+	routes.InvestorRoutes(api, s.db)
+	routes.MatchRoutes(api, s.db)
+	routes.DealFlowRoutes(api, s.db)
+	
+	// Register new routes
+	routes.GrantRoutes(api, s.db)
+	routes.TaskRoutes(api, s.db)
+	routes.MeetingRoutes(api, s.db)
 }
 
 func (s *FiberServer) healthHandler(c *fiber.Ctx) error {
@@ -30,6 +43,14 @@ func SetupRoutes(app *fiber.App, db database.Service, prefix string) {
 	routes.AuthRoutes(api, db)
 	routes.FounderRoutes(api, db)
 	routes.InvestorRoutes(api, db)
+	routes.MatchRoutes(api, db)
+	routes.DealFlowRoutes(api, db)
+	
+	// Register new routes
+	routes.GrantRoutes(api, db)
+	routes.TaskRoutes(api, db)
+	routes.MeetingRoutes(api, db)
+	
 	NotFoundRoute(app)
 }
 

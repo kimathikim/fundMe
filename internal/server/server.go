@@ -10,6 +10,7 @@ import (
 type FiberServer struct {
 	*fiber.App
 	db database.Service
+//   dbc database.DealFlowService
 }
 
 // New creates a new server instance
@@ -31,6 +32,7 @@ func New() *FiberServer {
 
 	// Register routes
 	SetupRoutes(server.App, server.db, "api/v1")
+  
 
 	return server
 }

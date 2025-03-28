@@ -3,6 +3,7 @@ package handlers
 import (
 	"DBackend/internal/database"
 	"DBackend/utils"
+
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -31,15 +32,22 @@ func (h *AuthHandler) LoginHandler(c *fiber.Ctx) error {
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password)); err != nil {
 		return c.Status(401).JSON(fiber.Map{"error": "Invalid credentials"})
 	}
-  id := user.ID.Hex()
+	id := user.ID.Hex()
 	token, err := utils.GenerateJWT(id, user.Roles)
-  c.Locals("token", token)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"error": "Failed to generate token"})
 	}
+
+	// Return comprehensive user details along with token
 	return c.JSON(fiber.Map{
-		"message": "Login successful",
-		"token":   token,
+		"token": token,
+		"user": fiber.Map{
+			"id":        id,
+			"email":     user.Email,
+			"roles":     user.Roles,
+			"firstName": user.FirstName,
+			"lastName":  user.SecondName,
+		},
 	})
 }
 
@@ -72,5 +80,3 @@ func (h *AuthHandler) MeHandler(c *fiber.Ctx) error {
 	}
 	return c.JSON(fiber.Map{"user_id": user_id, "roles": roles})
 }
-
-

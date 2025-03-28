@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-UN go build -o main cmd/api/main.go
+RUN go build -o main cmd/api/main.go
 
 FROM alpine:3.20.1 AS prod
 WORKDIR /app

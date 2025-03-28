@@ -12,7 +12,12 @@ func FounderRoutes(api fiber.Router, db database.Service) {
 	founder := api.Group("/founder", middleware.JWTMiddleware(db))
 	founderHandler := handlers.NewFounderHandler(db)
 	userHandler := handlers.NewUserHandler(db)
-	founder.Patch("/profile", middleware.RequireRole("founder"), founderHandler.UpdateFounderHandler)
+	founder.Put("/profile", middleware.RequireRole("founder"), founderHandler.UpdateFounderHandler)
 	founder.Get("/profile", middleware.RequireRole("founder"), founderHandler.GetFounderDetailsHandler)
-	founder.Get("/details", userHandler.GetUserDetailsHandler)
+	founder.Get("/", userHandler.GetUserDetailsHandler)
+	founder.Get("/notifications", middleware.RequireRole("founder"), founderHandler.GetAllNotificationsHandler)
+	founder.Put("/notifications/:notificationID", middleware.RequireRole("founder"), founderHandler.UpdateNotificationHandler)
+	founder.Delete("/notification/:notificationID", middleware.RequireRole("founder"), founderHandler.DeleteNotificationHandler)
+
+
 }
