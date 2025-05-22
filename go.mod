@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/gofiber/contrib/websocket v1.3.3
-	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/gofiber/fiber/v2 v2.52.7
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/joho/godotenv v1.5.1
 	github.com/testcontainers/testcontainers-go v0.35.0
